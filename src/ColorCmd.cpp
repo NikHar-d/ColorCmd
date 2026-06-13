@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include <windows.h>
 namespace ColorCmd {
     void Init(){
