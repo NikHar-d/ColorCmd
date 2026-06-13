@@ -47,14 +47,10 @@
  *    of the console will continue to be colored with last sets
  *    of colors. [ColorReset();]
  *
- * -----------------------------------------------------------------
- *                         Build command:
- * For g++:
- * +-- g++ main.cpp -o out.exe -LC:/PathTo/LibFolder -lColorCmd
- * For CMake:
- *
  ******************************************************************/
 
+#define CCMD_FORE 0
+#define CCMD_BACK 1
 
 namespace ColorCmd{
     /* Allow console coloring for Windows
@@ -74,8 +70,12 @@ namespace ColorCmd{
     
     /* Printf with color in one line
      */
-    void Printf(int r, int g, int b, const char* format, ...);
     void Printf(int rgb, const char* format, ...);
+    void Printf(int r, int g, int b, const char* format, ...);
+    void Printf(int type, int rgb, const char* format, ...);
+    void Printf(int type, int r, int g, int b, const char* format, ...);
+    void PrintfBoth(int FORErgb, int BACKrgb, const char* format, ...);
+    void PrintfBoth(int FOREr, int FOREg, int FOREb, int BACKr, int BACKg, int BACKb, const char* format, ...);
     /* Resets colors to original console colors
      */
     void Reset();
