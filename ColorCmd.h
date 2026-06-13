@@ -32,45 +32,37 @@
  *------------------------------------------------------------------
  *
  *                           How to use:
- * 1. Initialize the windows console colors, using the ColorEnable
- *    function [ColorEnable();]
+ * 1. Initialize the windows console colors, using the Init
+ *    function [ColorCmd::Init();]
  *
  * 2. Set the color of text and/or the background color with
  *    corresponding functions, passing 3 int values from 0 to 255
- *    for red, green and blue channel [ColorBack(180,0,65);]
- *    [ColorFront(255,255,0);]
+ *    for red, green and blue channel [ColorCmd::Back(180,0,65);]
+ *    [ColorCmd::Front(255,255,0);]
  *
  * 3. Print the information, that must be colored
  *    [std::cout << "some colored information"]
  *
  * 4. Reset output back to normal. If wouldn't do so, the output
  *    of the console will continue to be colored with last sets
- *    of colors. [ColorReset();]
- *
- * -----------------------------------------------------------------
- *                         Build command:
- * For g++:
- * +-- g++ main.cpp -o out.exe -LC:/PathTo/LibFolder -lColorCmd
- * For CMake:
+ *    of colors. [ColorCmd::Reset();]
  *
  ******************************************************************/
 
 
-namespace ColorCmd{
-    /* Allow console coloring for Windows
-     * Uses windows.h for enabling console colors through text commands
-     */
-    void Init();
+/* Allow console coloring for Windows
+ * Uses windows.h for enabling console colors through text commands
+ */
+void ColorEnable();
 
-    /* Sets the color of text
-     */
-    void Fore(int r, int g, int b);
+/* Sets the color of text
+ */
+void ColorFront(int r, int g, int b);
 
-    /* Sets color of background for character
-     */
-    void Back(int r, int g, int b);
+/* Sets color of background for character
+ */
+void ColorBack(int r, int g, int b);
 
-    /* Resets colors to original console colors
-     */
-    void Reset();
-}
+/* Resets colors to original console colors
+ */
+void ColorReset();
