@@ -65,11 +65,17 @@ namespace ColorCmd{
     /* Sets the color of text
      */
     void Fore(int r, int g, int b);
+    void Fore(int rgb);
 
     /* Sets color of background for character
      */
     void Back(int r, int g, int b);
-
+    void Back(int rgb);
+    
+    /* Printf with color in one line
+     */
+    void Printf(int r, int g, int b, const char* format, ...);
+    void Printf(int rgb, const char* format, ...);
     /* Resets colors to original console colors
      */
     void Reset();
