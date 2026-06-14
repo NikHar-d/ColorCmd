@@ -1,0 +1,71 @@
+#include <iostream>
+#include <stdio.h>
+#include <windows.h>
+#include <utility>
+
+#define CCMD_FORE 0
+#define CCMD_BACK 1
+
+namespace ColorCmd {
+
+    void Init(){
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        DWORD dwMode = 0;
+        GetConsoleMode(hOut, &dwMode);
+        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        SetConsoleMode(hOut, dwMode);
+    }
+    
+    int __rgb_r(int rgb){return (rgb&0xff0000)>>16;}
+    int __rgb_g(int rgb){return (rgb&0x00ff00)>>8;}
+    int __rgb_b(int rgb){return (rgb&0x0000ff);}
+    int __rgb(int r, int g, int b){return ((r*256*256)|(g*256))|b;}
+
+    void Fore(int r, int g, int b){
+        std::cout<<"\x1b[38;2;"<<r<<";"<<g<<";"<<b<<"m";
+    }
+    void Fore(int rgb){
+       std::cout<<"\x1b[38;2;"<<((rgb&0xff0000)>>16)<<";"<<((rgb&0x00ff00)>>8)<<";"<<(rgb&0x0000ff)<<"m";
+    }
+    void Back(int r, int g, int b){
+       std::cout<<"\x1b[48;2;"<<r<<";"<<g<<";"<<b<<"m";
+    }
+    void Back(int rgb){
+       std::cout<<"\x1b[48;2;"<<((rgb&0xff0000)>>16)<<";"<<((rgb&0x00ff00)>>8)<<";"<<(rgb&0x0000ff)<<"m";
+    }
+
+    template <>
+    void Printf(int type, int rgb, const char* format, auto&&... args){
+        if (type==CCMD_FORE) Fore(rgb);
+        if (type==CCMD_BACK) Back(rgb);
+        printf(format, std::forward<Args>(args)...);
+    }
+    
+    template <>
+    void Printf(int r, int g, int b, const char* format, auto&&... args){
+        Printf(CCMD_FORE, __rgb(r,g,b), format, std::forward<auto>(args)...);
+    }
+    // template <typename... Args>
+    // void Printf(int rgb, const char* format, Args&&... args){
+    //     Printf(CCMD_FORE, rgb, format, std::forward<Args>(args)...);
+    // }
+    // template <typename... Args>
+    // void Printf(int type, int r, int g, int b, const char* format, Args&&... args){
+    //     Printf(type, __rgb(r,g,b), format, std::forward<Args>(args)...);
+    // }
+    // template <typename... Args>
+    // void PrintfBoth(int FORErgb, int BACKrgb, const char* format, Args&&... args){
+    //     Fore(FORErgb);
+    //     Back(BACKrgb);
+    //     printf(format, std::forward<Args>(args)...);
+    // }
+    // template <typename... Args>
+    // void PrintfBoth(int FOREr, int FOREg, int FOREb, int BACKr, int BACKg, int BACKb, const char* format, Args&&... args){
+    //     Fore(__rgb(FOREr,FOREg,FOREb));
+    //     Back(__rgb(BACKr,BACKg,BACKb));
+    //     printf(format, std::forward<Args>(args)...);
+    // }
+    void Reset(){
+       std::cout<<"\x1b[0m";
+    }
+}

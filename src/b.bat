@@ -5,4 +5,3 @@
 @set LINKS=
 @set OUT=out.exe
 g++ %SOURCES% -o %OUT% %INCLUDES% %LIBS% %LINKS%
-out.exe debug

@@ -37,5 +37,9 @@ int main(int argc, char* argv[]){
     ColorCmd::Printf(CCMD_BACK, 0x888888, "type rgb (back) %i\n", 123);
     ColorCmd::PrintfBoth(0xffffff, 0x0000ff, "both rgb rgb %i\n", 123);
     ColorCmd::PrintfBoth(255,255,255,255,0,0, "both r g b r g b %i\n", 123);
+
+    ColorCmd::Warn("This is a warn message number %i", 1);
+    ColorCmd::Warn("This is a warn message number %i", 2);
+
     ColorCmd::Reset();
 }
