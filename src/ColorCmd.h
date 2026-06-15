@@ -33,19 +33,34 @@
  *
  *                           How to use:
  * 1. Initialize the windows console colors, using the ColorEnable
- *    function [ColorEnable();]
+ *    function [ColorCmd::ColorInit();]
  *
  * 2. Set the color of text and/or the background color with
  *    corresponding functions, passing 3 int values from 0 to 255
  *    for red, green and blue channel [ColorBack(180,0,65);]
- *    [ColorFront(255,255,0);]
+ *    [ColorCmd::Fore(255,255,0);]
  *
  * 3. Print the information, that must be colored
  *    [std::cout << "some colored information"]
  *
  * 4. Reset output back to normal. If wouldn't do so, the output
  *    of the console will continue to be colored with last sets
- *    of colors. [ColorReset();]
+ *    of colors. [ColorCmd::ColorReset();]
+ *
+ *
+ *                       Or else with Prinf
+ * 1. Initialize the windows console colors, using the ColorEnable
+ *    function [ColorCmd::ColorInit();]
+ *
+ * 2. Use Printf and pass the color in format of single integer or
+ *    three integers, after that, pass the text like in std::prinf
+ *    and values after
+ *    [ColorCmd::Printf(0xff00ff, "%d: magenta text", 1)]
+ *    [ColorCmd::Printf(255, 0, 255, "%d: magenta text", 1)]
+ *
+ * 4. Reset output back to normal. If wouldn't do so, the output
+ *    of the console will continue to be colored with last sets
+ *    of colors. [ColorCmd::ColorReset();]
  *
  ******************************************************************/
 
@@ -58,29 +73,35 @@ namespace ColorCmd{
      */
     void Init();
 
-    /* Sets the color of text
-     */
+    // Sets the color of text
     void Fore(int r, int g, int b);
     void Fore(int rgb);
 
-    /* Sets color of background for character
-     */
+    // Sets color of background for characters
     void Back(int r, int g, int b);
     void Back(int rgb);
     
-    /* Printf with color in one line
-     */
+    // Resets colors to original console colors
+    void Reset();
+    
+    // Printf for coloring in one line
+    // single integer value e.g. 0xffaa6c or 16755308
     void Printf(int rgb, const char* format, ...);
+    // three integer inputs for red, green and blue e.g. (255,255,0)
     void Printf(int r, int g, int b, const char* format, ...);
+    // allows to pass the type of coloring: background (CCMD_BACK) or foreground (CCMD_FORE)
     void Printf(int type, int rgb, const char* format, ...);
+    // allows to pass the type of coloring: background (CCMD_BACK) or foreground (CCMD_FORE) (split rgb inputs)
     void Printf(int type, int r, int g, int b, const char* format, ...);
+    // colors both background and foreground by passing fore color and back color at once
     void PrintfBoth(int FORErgb, int BACKrgb, const char* format, ...);
+    // colors both background and foreground by passing fore color and back color at once (split rgb inputs)
     void PrintfBoth(int FOREr, int FOREg, int FOREb, int BACKr, int BACKg, int BACKb, const char* format, ...);
 
+    // preset for yellow color and slightly yellow background, newline at the end and color auto reset
     void Warn(const char* format, ...);
+    // preset for white text on red background, newline at the end and color auto reset
     void Err(const char* format, ...);
+    // preset for green text, newline at the end and color auto reset
     void Good(const char* format, ...);
-    /* Resets colors to original console colors
-     */
-    void Reset();
 }
