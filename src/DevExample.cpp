@@ -38,8 +38,11 @@ int main(int argc, char* argv[]){
     ColorCmd::PrintfBoth(0xffffff, 0x0000ff, "both rgb rgb %i\n", 123);
     ColorCmd::PrintfBoth(255,255,255,255,0,0, "both r g b r g b %i\n", 123);
 
-    ColorCmd::Warn("This is a warn message number %i", 1);
-    ColorCmd::Warn("This is a warn message number %i", 2);
+
+    ColorCmd::Warn("This is a warn message, enter isn't cleared %i", 1);
+    ColorCmd::Warn("This is a warn message %i", 1);
+    ColorCmd::Err("This is a error message %i", 2);
+    ColorCmd::Good("This is a good message %i", 3);
 
     ColorCmd::Reset();
 }

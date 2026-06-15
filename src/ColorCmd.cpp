@@ -89,8 +89,26 @@ namespace ColorCmd {
         va_list args;
         va_start(args, format);
         Reset();
-        Fore(0xffff00);
-        vprintf(format, args);
+        Back(0x333300);
+        Printf(CCMD_FORE, 0xffff00, format, args);
+        Reset();
+        std::cout<<'\n';
+        va_end(args);
+    }
+    void Err(const char* format, ...){
+        va_list args;
+        va_start(args, format);
+        Reset();
+        Printf(CCMD_BACK, 0xff0000, format, args);
+        Reset();
+        std::cout<<'\n';
+        va_end(args);
+    }
+    void Good(const char* format, ...){
+        va_list args;
+        va_start(args, format);
+        Reset();
+        Printf(CCMD_FORE, 0x00cc00, format, args);
         Reset();
         std::cout<<'\n';
         va_end(args);

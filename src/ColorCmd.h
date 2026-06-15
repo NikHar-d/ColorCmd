@@ -78,6 +78,8 @@ namespace ColorCmd{
     void PrintfBoth(int FOREr, int FOREg, int FOREb, int BACKr, int BACKg, int BACKb, const char* format, ...);
 
     void Warn(const char* format, ...);
+    void Err(const char* format, ...);
+    void Good(const char* format, ...);
     /* Resets colors to original console colors
      */
     void Reset();
